@@ -9,7 +9,7 @@ por meio da função analogRead()
 
 // Variável que armazenará o valor convertido pelo ADC*
 int valor;
-int potenciometro = A2;
+
 #define LED1_Vermelho 2
 #define LED_Amarelo 3
 #define LED1_Verde 4
@@ -42,7 +42,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  valor = analogRead(potenciometro);
+  valor = analogRead(A2);
   //questao2();
   questao3();
 }
