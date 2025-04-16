@@ -17,11 +17,12 @@
 #define Bt2 2
 #define Bt3 3
 
-// Variaveis globais
+// // Variaveis globais
 int valor;
-bool flag1, statusBt1;
-bool flag2, statusBt2;
-bool flag3, statusBt3;
+bool piscando = 0;
+bool flag1 = 0;
+bool flag2 = 0;
+bool flag3 = 0;
 
 
 void setup() {
@@ -199,56 +200,114 @@ void questao4() {
   os LEDs vermelhos apagam. Ciclo reinicia.
 */
 
+// void questao5() {
+//   // Insira aqui o código da questão 05
+//   // Etapa 01
+//   statusBt1 = digitalRead(Bt1);
+//   delay(100);
+
+//   if (statusBt1 == 1 && flag1 == 0) {
+//     Serial.println("Botão 1 foi pressionado");
+//     flag1 = 1;
+//   }
+//   if (statusBt1 == 0 && flag1 == 1) {
+//     Serial.println("Botão 1 foi desligado");
+//     flag1 = 0;
+//     digitalWrite(LedGreenV1, HIGH);
+//     digitalWrite(LedGreenP1, HIGH);
+//   }
+
+//   // Etapa 2
+//   statusBt2 = digitalRead(Bt2);
+
+//   delay(100);
+
+//   if (statusBt2 == 1 && flag2 == 0) {
+//     Serial.println("Botão 2 foi pressionado");
+//     flag2 = 1;
+//   }
+//   if (statusBt2 == 0 && flag2 == 1) {
+//     Serial.println("Botão 2 foi desligado");
+//     flag2 = 0;
+//     digitalWrite(LedGreenV1, LOW);
+//     digitalWrite(LedGreenP1, LOW);
+//     while (flag3 == 0 && statusBt3 == 0) {
+//       statusBt3 = digitalRead(Bt3);
+//       delay(100);
+//       if (statusBt3 == 1 && flag3 == 0) {
+//         Serial.println("Botão 3 foi pressionado");
+//         flag3 = 1;
+//       }
+//       if (statusBt3 == 0 && flag3 == 1) {
+//         Serial.println("Botão 3 foi desligado");
+//         flag3 = 0;
+//       }
+//       digitalWrite(LedRedP1, HIGH);
+//       digitalWrite(LedRedV1, HIGH);
+//       delay(500);
+//       digitalWrite(LedRedP1, LOW);
+//       digitalWrite(LedRedV1, LOW);
+//       delay(500);
+//     }
+//   }
+
+//   // Etapa 3
+// }
+
+
+void piscaVermelho() {
+  digitalWrite(LedRedV1, HIGH);
+  digitalWrite(LedRedP1, HIGH);
+  delay(200);
+  digitalWrite(LedRedV1, LOW);
+  digitalWrite(LedRedP1, LOW);
+  delay(200);
+}
 void questao5() {
-  // Insira aqui o código da questão 05
-  // Etapa 01
-  statusBt1 = digitalRead(Bt1);
-  delay(100);
 
-  if (statusBt1 == 1 && flag1 == 0) {
-    Serial.println("Botão 1 foi pressionado");
+  bool status1 = digitalRead(Bt1);
+
+
+  if (status1 == 1 && flag1 == 0) {
     flag1 = 1;
+    Serial.println("Botão 1 pressionado");
   }
-  if (statusBt1 == 0 && flag1 == 1) {
-    Serial.println("Botão 1 foi desligado");
+  if (status1 == 1 && flag1 == 1) {
     flag1 = 0;
-    digitalWrite(LedGreenV1, HIGH);
+    Serial.println("Botão 1 foi solto!");
     digitalWrite(LedGreenP1, HIGH);
+    digitalWrite(LedGreenV1, HIGH);
   }
 
-  // Etapa 2
-  statusBt2 = digitalRead(Bt2);
+  bool status2 = digitalRead(Bt2);
 
-  delay(100);
-
-  if (statusBt2 == 1 && flag2 == 0) {
-    Serial.println("Botão 2 foi pressionado");
+  if (status2 == 1 && flag2 == 0) {
     flag2 = 1;
+    Serial.println("Botão 2 pressionado");
   }
-  if (statusBt2 == 0 && flag2 == 1) {
-    Serial.println("Botão 2 foi desligado");
+  if (status2 == 1 && flag2 == 1) {
     flag2 = 0;
-    digitalWrite(LedGreenV1, LOW);
+    Serial.println("Botão 2 foi solto!");
+    // Apaga os led's verde
     digitalWrite(LedGreenP1, LOW);
-    while (flag3 == 0 && statusBt3 == 0) {
-      statusBt3 = digitalRead(Bt3);
-      delay(100);
-      if (statusBt3 == 1 && flag3 == 0) {
-        Serial.println("Botão 3 foi pressionado");
-        flag3 = 1;
-      }
-      if (statusBt3 == 0 && flag3 == 1) {
-        Serial.println("Botão 3 foi desligado");
-        flag3 = 0;
-      }
-      digitalWrite(LedRedP1, HIGH);
-      digitalWrite(LedRedV1, HIGH);
-      delay(500);
-      digitalWrite(LedRedP1, LOW);
-      digitalWrite(LedRedV1, LOW);
-      delay(500);
+    digitalWrite(LedGreenV1, LOW);
+
+    // Começa a piscar o vermelho
+    piscando = 1;
+  }
+
+  while (piscando) {
+    piscaVermelho();
+    bool status3 = digitalRead(Bt3);
+
+    if (status3 == 1 && flag3 == 0) {
+      flag3 = 1;
+      Serial.println("Botão 3 pressionado");
+    }
+    if (status3 == 1 && flag3 == 1) {
+      flag3 = 0;
+      Serial.println("Botão 3 foi solto!");
+      piscando = 0;
     }
   }
-
-  // Etapa 3
 }
