@@ -53,10 +53,10 @@ const char* SSID      = "Saes";
 const char* PASSWORD  = "78610760";
 
 // MQTT Broker
-const char* BROKER_MQTT  = "74.179.84.66";
+const char* BROKER_MQTT  = "20.249.206.202";
 const int   BROKER_PORT  = 1883;
-const char* mqttUser     = "gs2024";
-const char* mqttPassword = "q1w2e3r4";
+const char* mqttUser     = "";
+const char* mqttPassword = "";
 
 // Tópico MQTT
 #define TOPICO_PUBLISH  "esp32/sala708"
@@ -216,6 +216,6 @@ void piscaLed() {
 //----------------------------------------------------
 
 void leituraSensor() {
-  temp = dht.readTemperature();
+  temp = Random();
   umid = dht.readHumidity();
 }
