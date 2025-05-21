@@ -49,8 +49,8 @@ const char* ID        = "Saes";
 const char* moduleID  = "ESP32 - 004";
 
 // Wi-Fi
-const char* SSID      = "Saes";
-const char* PASSWORD  = "78610760";
+const char* SSID      = "Wokwi-GUEST";
+const char* PASSWORD  = "";
 
 // MQTT Broker
 const char* BROKER_MQTT  = "20.249.206.202";
@@ -68,7 +68,7 @@ WiFiClient espClient;
 PubSubClient MQTT(espClient);
 char buffer[256]; // Buffer para o JSON serializado
 
-float temp, umid;
+float temp, umid, pressao, altitude;
 //----------------------------------------------------------
 // Setup inicial
 
@@ -119,8 +119,11 @@ void loop() {
     doc["hora"]   = hora;
 
     // 4. Sensores
-    doc["Temperatura"] = temp;
-    doc["Umidade"]     = umid;
+    doc["Temperatura"] = String(temp) += "°C";
+    doc["Umidade"]     = String(umid) += "%";
+    doc["Pressão"] = String(pressao) += " hPa";
+    doc["Altitude"] = String(altitude) += " m";
+
     // Serializa JSON para string
     serializeJson(doc, buffer);
 
@@ -216,6 +219,8 @@ void piscaLed() {
 //----------------------------------------------------
 
 void leituraSensor() {
-  temp = Random();
-  umid = dht.readHumidity();
+  temp = random(20, 35);
+  umid = random(40, 80);
+  pressao = random(980, 1050);
+  altitude = random(0, 500);
 }
